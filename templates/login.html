@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Language Learning Game{% endblock %}
+
+{% block content %}
+    <section>
+        <h2>Login</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Language Exercises - Language Learning Game{% endblock %}
+
+{% block content %}
+    <section>
+        <h2>{{ language.name }} Exercises</h2>
+        <!-- exercises.html -->
+<form method="post" action="{% url 'exercises' language.id %}">
+    {% csrf_token %}
+    {% for exercise in exercises %}
+      <fieldset>
+        <legend>{{ exercise.question }}</legend>
+        <label><input type="radio" name="question_{{ exercise.id }}" value="A"> {{ exercise.choice_a }}</label><br>
+        <label><input type="radio" name="question_{{ exercise.id }}" value="B"> {{ exercise.choice_b }}</label><br>
+        <label><input type="radio" name="question_{{ exercise.id }}" value="C"> {{ exercise.choice_c }}</label><br>
+        <label><input type="radio" name="question_{{ exercise.id }}" value="C"> {{ exercise.choice_d }}</label><br>
+        
+      </fieldset>
+    {% endfor %}
+    <button type="submit">Submit Answers</button>
+  </form>
+  
+{% endblock %}

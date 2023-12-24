@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Language Learning Game{% endblock %}
+
+{% block content %}
+    <header>
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}!</p>
+            <a href="{% url 'logout' %}">Logout</a>
+            <a href="{% url 'user_profile' %}">User Profile</a>
+            <a href="{% url 'user_settings' %}">User Settings</a>
+            <form method="post" action="{% url 'exercises' language_id=1 %}">
+                {% csrf_token %}
+                <select name="language_id" id="language-selector">
+                    {% for language in available_languages %}
+                        <option value="{{ language.id }}" {% if language.id == selected_language.id %}selected{% endif %}>
+                            {{ language.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Start Quiz</button>
+            </form> 
+        {% else %}
+            <p>Welcome to the Language Learning Game!</p>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+    </header>
+
+    <main>
+        <h2>Select a language to get started:</h2>
+        <ul>
+            <!-- Add links to language exercises -->
+            <li><a href="{% url 'exercises' language_id=1 %}">English</a></li>
+            <li><a href="{% url 'exercises' language_id=2 %}">Spanish</a></li>
+            <!-- Add more languages as needed -->
+        </ul>
+
+        {% if user.is_authenticated %}
+            <h2>Leaderboard</h2>
+            <form method="post" action="{% url 'leaderboard' language_id=1 %}">
+                {% csrf_token %}
+                <select name="language_id" id="leaderboard-language-selector">
+                    {% for language in available_languages %}
+                        <option value="{{ language.id }}" {% if language.id == selected_language.id %}selected{% endif %}>
+                            {{ language.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">View Leaderboard</button>
+            </form>
+        {% endif %}
+    </main>
+{% endblock %}

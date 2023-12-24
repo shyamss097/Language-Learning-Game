@@ -1,0 +1,7 @@
+<!-- user_settings.html -->
+<form method="post" action="{% url 'user_settings' %}">
+    {% csrf_token %}
+    <button type="submit" name="action" value="reset_progress">Reset Progress</button>
+    <!-- Add other settings/actions here -->
+  </form>
+  
